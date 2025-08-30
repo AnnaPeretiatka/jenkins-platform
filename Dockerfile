@@ -3,7 +3,7 @@ USER root
 # install system deps: docker client, git, ssh-client, python3 & pip
 RUN apt-get update \
  && apt-get install -y --no-install-recommends docker.io git openssh-client python3 python3-pip unzip \
- && python3 -m pip install --no-cache-dir --upgrade pip \
+ && python3 -m pip install --no-cache-dir --upgrade pip --break-system-packages \
  && rm -rf /var/lib/apt/lists/*
 
 # Install AWS CLI v2
@@ -31,6 +31,7 @@ pipeline-stage-view \
 plain-credentials
 
 USER jenkins
+
 
 
 
