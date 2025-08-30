@@ -1,16 +1,35 @@
+# platform/Dockerfile
 FROM jenkins/jenkins:lts
 
-# Switch to root to install dependencies
+
 USER root
 
-# Install docker CLI and AWS CLI inside the Jenkins container
-RUN apt-get update && \
-    apt-get install -y docker.io python3-pip unzip && \
-    curl "https://d1vvhvl2y92vvt.cloudfront.net/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip" && \
-    unzip awscliv2.zip && \
-    sudo ./aws/install && \
-    rm -rf awscliv2.zip ./aws && \
-    usermod -aG docker jenkins
 
-# Switch back to jenkins user
+# install system deps: docker client, git, ssh-client, python3 & pip
+RUN apt-get update \
+&& apt-get install -y --no-install-recommends docker.io git ssh-client python3 python3-pip unzip \
+&& pip3 install --upgrade awscli \
+&& usermod -aG docker jenkins \
+&& rm -rf /var/lib/apt/lists/*
+
+
+# Install commonly-needed plugins (adjust versions if you prefer)
+# The list includes: pipeline, docker pipeline, docker cloud, git, github multibranch, ssh-agent, credentials, amazon-ecr
+RUN jenkins-plugin-cli --plugins \
+workflow-aggregator \
+docker-workflow \
+docker-plugin \
+git \
+git-client \
+github \
+github-branch-source \
+credentials \
+credentials-binding \
+ssh-credentials \
+ssh-agent \
+amazon-ecr \
+pipeline-utility-steps \
+pipeline-stage-view \
+plain-credentials
+
 USER jenkins
