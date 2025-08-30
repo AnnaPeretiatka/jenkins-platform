@@ -15,8 +15,8 @@ services:
       #- /home/ubuntu/.ssh:/root/.ssh
     #environment:
     #  - DOCKER_HOST=tcp://docker:988
-    #restart: unless-stopped
 
 volumes:
   jenkins_home:
+
 
