@@ -12,11 +12,12 @@ services:
     volumes:
       - jenkins_home:/var/jenkins_home
       - /var/run/docker.sock:/var/run/docker.sock # allow container to use host docker
-      #- /home/ubuntu/.ssh:/root/.ssh
+      - /home/ubuntu/.ssh:/root/.ssh:ro
     #environment:
     #  - DOCKER_HOST=tcp://docker:988
 
 volumes:
   jenkins_home:
+
 
 
