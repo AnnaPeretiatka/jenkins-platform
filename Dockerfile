@@ -8,14 +8,15 @@ RUN apt-get update && \
         git \
         openssh-client \
         python3 \
-        python3-pip \
+        python3-venv \
         bash \
-        && curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip" \
-        && unzip awscliv2.zip \
-        && ./aws/install \
-        && rm -rf awscliv2.zip aws \
-        && python3 -m pip install --no-cache-dir --upgrade pip \
-        && rm -rf /var/lib/apt/lists/*
+    && python3 -m ensurepip \
+    && python3 -m pip install --no-cache-dir --upgrade pip setuptools wheel \
+    && curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip" \
+    && unzip awscliv2.zip \
+    && ./aws/install \
+    && rm -rf awscliv2.zip aws \
+    && rm -rf /var/lib/apt/lists/*
 
 # Install plugins for Jenkins (automatically)
 RUN jenkins-plugin-cli --plugins \
@@ -36,6 +37,7 @@ pipeline-stage-view \
 plain-credentials
 
 USER jenkins
+
 
 
 
