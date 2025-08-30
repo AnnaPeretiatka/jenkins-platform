@@ -2,7 +2,7 @@ FROM jenkins/jenkins:lts
 USER root
 # install system deps: docker client, git, ssh-client, python3 & pip
 RUN apt-get update \
-&& apt-get install -y --no-install-recommends git openssh-client python3 python3-pip unzip awscli\
+&& apt-get install -y --no-install-recommends docker.io git openssh-client python3 python3-pip unzip awscli\
 # && usermod -aG docker jenkins \
 && rm -rf /var/lib/apt/lists/*
 
