@@ -2,9 +2,8 @@ FROM jenkins/jenkins:lts
 USER root
 # install system deps: docker client, git, ssh-client, python3 & pip
 RUN apt-get update \
-&& apt-get install -y --no-install-recommends git openssh-client python3 python3-pip unzip \
-&& pip3 install --upgrade awscli \
-&& usermod -aG docker jenkins \
+&& apt-get install -y --no-install-recommends git openssh-client python3 python3-pip unzip awscli\
+# && usermod -aG docker jenkins \
 && rm -rf /var/lib/apt/lists/*
 
 # Install plugins for Jenkins (automatically)
