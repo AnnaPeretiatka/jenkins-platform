@@ -3,20 +3,20 @@ services:
   jenkins:
     build: .
     container_name: jenkins
-    #image: jenkins/jenkins:lts-jdk11
-    privileged: true
-    user: root
+    restart: unless-stopped
+    #privileged: true
+    #user: root
     ports:
       - "8080:8080" #jenkins web
       - "50000:50000" #jenkins agent
     volumes:
       - jenkins_home:/var/jenkins_home
-      - /var/run/docker.sock:/var/run/docker.sock
-      - /home/ubuntu/.ssh:/root/.ssh
+      - /var/run/docker.sock:/var/run/docker.sock # allow container to use host docker
+      #- /home/ubuntu/.ssh:/root/.ssh
     #environment:
     #  - DOCKER_HOST=tcp://docker:988
     #restart: unless-stopped
 
 volumes:
-
   jenkins_home:
+
